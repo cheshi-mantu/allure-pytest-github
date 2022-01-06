@@ -4,10 +4,10 @@ from .marks import microservice, layer, owner, tm4j, jira_issues
 
 pytestmark = [
     layer("web"),
-    owner("kayak"),
+    owner("egorivanov"),
 ]
 
-BRAND = ["momodo", "kayak"]
+BRAND = ["juniors", "grownups"]
 LOCALE = ["de_de", "en_us", "en_uk"]
 
 @allure.title("Checking webpage for a brand with different locale")
