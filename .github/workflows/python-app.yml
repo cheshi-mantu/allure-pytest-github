@@ -5,25 +5,65 @@ name: Python application
 
 on:
   push:
+  workflow_dispatch:
+    inputs:
+      TEST_ENDPOINT:
+        description: "Endpoint for tests"
+        required: true
+        default: https://qa.somehost.xyz
+      TEST_BROWSER:
+        description: "Browser for tests"
+        required: true
+        default: firefox
+      ALLURE_JOB_RUN_ID:
+        description: "Inner parameter for Allure TestOps"
+        required: false
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+env:
+  ALLURE_ENDPOINT: ${{ secrets.ALLURE_ENDPOINT }}
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_PROJECT_ID: ${{ secrets.ALLURE_PROJECT_ID }}
+  ALLURE_TESTPLAN_PATH: "./testplan.json"
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+
 jobs:
-  build:
-
+  tests:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python 3.10
       uses: actions/setup-python@v2
+    - uses: actions/github-script@v4
+      id: allure-job-uid
+      with:
+        result-encoding: string
+        script: |
+          const result = await github.actions.getWorkflowRun({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.runId,
+          });
+          return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
+    - name: Download allurectl
+      run: |
+        wget https://github.com/allure-framework/allurectl/releases/download/1.20.3/allurectl_linux_386 -O ./allurectl
+        chmod +x ./allurectl
       with:
         python-version: "3.10"
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install allure-pytest pytest
-    - name: Test with pytest
+    - name: Prepare test plan
+      run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+    - name: Test with pytest and gen allure results
       run: |
-        pytest
+        ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+      env:
+        ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+        TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+        TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
