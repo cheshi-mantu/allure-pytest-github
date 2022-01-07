@@ -61,6 +61,8 @@ jobs:
     - name: Test with pytest and gen allure results
       run: |
         ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+        printenv
+        printenv | grep ALLURE_
       env:
         ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
