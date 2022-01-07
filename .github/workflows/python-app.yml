@@ -65,3 +65,7 @@ jobs:
       run: |  
         printenv
         printenv | grep ALLURE_
+      env:
+        ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+        TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+        TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
