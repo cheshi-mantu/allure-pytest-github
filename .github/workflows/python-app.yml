@@ -59,9 +59,12 @@ jobs:
     - name: Prepare test plan
       run: ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
     - name: Test with pytest and gen allure results
-      run: |
-        ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
-      env:
-        ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
-        TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
-        TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
+      run: ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+    - name: Gettings env data
+      run: |  
+        printenv
+        printenv | grep ALLURE_
+    env:
+      ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+      TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+      TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
