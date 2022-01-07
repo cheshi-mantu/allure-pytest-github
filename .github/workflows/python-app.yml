@@ -59,7 +59,7 @@ jobs:
     - name: Prepare test plan
       run: |
         ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-        if [ -e ${ALLURE_TESTPLAN_PATH} ]; then cat ${ALLURE_TESTPLAN_PATH}; fi
+        if [ -r ${ALLURE_TESTPLAN_PATH} ]; then; cat ${ALLURE_TESTPLAN_PATH}; fi
     - name: Test with pytest and gen allure results
       env:
         ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
