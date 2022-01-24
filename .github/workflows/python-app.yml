@@ -30,7 +30,7 @@ env:
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   ALLURE_LAUNCH_TAGS: "github, demo, pytest, ${{GITHUB_REF_NAME}}"
-  GITHUB_BRANCH: ${{ GITHUB_REF_NAME }}
+  GITHUB_BRANCH: ${{ github.GITHUB_REF_NAME }}
 
 jobs:
   tests:
