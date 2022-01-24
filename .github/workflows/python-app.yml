@@ -29,7 +29,8 @@ env:
   ALLURE_TESTPLAN_PATH: "./testplan.json"
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
-  ALLURE_LAUNCH_TAGS: "github, demo, pytest"
+  ALLURE_LAUNCH_TAGS: "github, demo, pytest, ${GITHUB_REF_NAME}"
+  GITHUB_BRANCH: $GITHUB_REF_NAME
 
 jobs:
   tests:
@@ -66,7 +67,6 @@ jobs:
         ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
         TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
-        GITHUB_BRANCH: ${GITHUB_REF_NAME}
       run: |
         printenv
         ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
