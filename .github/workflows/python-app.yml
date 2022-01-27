@@ -10,7 +10,7 @@ on:
       TEST_ENDPOINT:
         description: "Endpoint for tests"
         required: true
-        default: https://qa.somehost.xyz
+        default: https://gimme.gimme.dat.github.com
       TEST_BROWSER:
         description: "Browser for tests"
         required: true
