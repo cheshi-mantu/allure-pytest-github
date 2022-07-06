@@ -10,6 +10,20 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
+- task: Bash@3
+  displayName: 'Install pytest'
+  inputs:
+    targetType: 'inline'
+    script: |
+      pip install pytest allure-pytest
+- task: Bash@3
+  displayName: 'Install allurectl'
+  inputs:
+    targetType: 'inline'
+    script: |
+      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_386 -O ./allurectl
+      chmod +x ./allurectl
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
