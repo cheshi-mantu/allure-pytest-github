@@ -24,8 +24,14 @@ steps:
       wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_386 -O ./allurectl
       chmod +x ./allurectl
 
-- script: echo Hello, world!
+- script: |
+
   displayName: 'Run a one-line script'
+  env:
+    ALLURE_RESULTS: "./allure-results"
+    ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
+    TEST_BRANCH: $(Build.SourceBranchName)
+    ALLURE_LAUNCH_TAGS: "$(Build.SourceBranchName), azure"
 
 - script: |
     echo '$(Build.SourceBranchName)'
