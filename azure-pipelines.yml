@@ -25,6 +25,9 @@ steps:
       chmod +x ./allurectl
 
 - script: |
+    ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+    if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
+    ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
 
   displayName: 'Run a one-line script'
   env:
@@ -33,6 +36,3 @@ steps:
     TEST_BRANCH: $(Build.SourceBranchName)
     ALLURE_LAUNCH_TAGS: "$(Build.SourceBranchName), azure"
 
-- script: |
-    echo '$(Build.SourceBranchName)'
-  displayName: 'Run a multi-line script'
