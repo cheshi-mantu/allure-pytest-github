@@ -14,5 +14,5 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo 'Build.SourceBranchName'
+    echo '$(Build.SourceBranchName)'
   displayName: 'Run a multi-line script'
