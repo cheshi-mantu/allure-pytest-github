@@ -31,6 +31,9 @@ steps:
 
   displayName: 'Run a one-line script'
   env:
+    ALLURE_ENDPOINT: $(ALLURE_ENDPOINT)
+    ALLURE_PROJECT_ID: $(ALLURE_PROJECT_ID)
+    ALLURE_TOKEN: $(ALLURE_TOKEN)
     ALLURE_RESULTS: "./allure-results"
     ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
     TEST_BRANCH: $(Build.SourceBranchName)
