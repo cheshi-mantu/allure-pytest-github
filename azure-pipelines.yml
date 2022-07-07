@@ -39,3 +39,5 @@ steps:
     ALLURE_LAUNCH_NAME: "$(Build.DefinitionName)-$(Build.BuildNumber)"
     TEST_BRANCH: $(Build.SourceBranchName)
     ALLURE_LAUNCH_TAGS: "$(Build.SourceBranchName), azure"
+    AZURE_BROWSER: "edge"
+    AZURE_HOST: "https://of.course.i.will.always.love.you"
