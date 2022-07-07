@@ -26,7 +26,7 @@ steps:
 
 - script: |
     ./allurectl job-run plan --output-file $(ALLURE_TESTPLAN_PATH)
-    if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
+    # if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
     ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
 
   displayName: 'running pytest tests'
@@ -39,4 +39,3 @@ steps:
     ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
     TEST_BRANCH: $(Build.SourceBranchName)
     ALLURE_LAUNCH_TAGS: "$(Build.SourceBranchName), azure"
-
