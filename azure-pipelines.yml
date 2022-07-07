@@ -25,11 +25,11 @@ steps:
       chmod +x ./allurectl
 
 - script: |
-    ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+    ./allurectl job-run plan --output-file $(ALLURE_TESTPLAN_PATH)
     if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
     ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
 
-  displayName: 'Run a one-line script'
+  displayName: 'running pytest tests'
   env:
     ALLURE_ENDPOINT: $(ALLURE_ENDPOINT)
     ALLURE_PROJECT_ID: $(ALLURE_PROJECT_ID)
