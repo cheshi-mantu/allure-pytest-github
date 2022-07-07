@@ -36,6 +36,6 @@ steps:
     ALLURE_TOKEN: $(ALLURE_TOKEN)
     ALLURE_TESTPLAN_PATH: $(ALLURE_TESTPLAN_PATH)
     ALLURE_RESULTS: "./allure-results"
-    ALLURE_LAUNCH_NAME: "${CI_PROJECT_NAME} - ${CI_COMMIT_SHORT_SHA}"
+    ALLURE_LAUNCH_NAME: "$(Build.DefinitionName)-$(Build.BuildNumber)"
     TEST_BRANCH: $(Build.SourceBranchName)
     ALLURE_LAUNCH_TAGS: "$(Build.SourceBranchName), azure"
