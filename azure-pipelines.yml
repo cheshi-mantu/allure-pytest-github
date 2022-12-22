@@ -21,7 +21,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_386 -O ./allurectl
+      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
       chmod +x ./allurectl
 
 - script: |
