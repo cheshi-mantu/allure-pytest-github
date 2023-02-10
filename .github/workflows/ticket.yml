@@ -17,6 +17,9 @@ on:
       ALLURE_JOB_RUN_ID:
         description: "Inner parameter for Allure TestOps"
         required: false
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 env:
   ALLURE_ENDPOINT: ${{ secrets.ALLURE_ENDPOINT }}
@@ -36,9 +39,9 @@ jobs:
           python-version: '3.10'
       - name: Install dependencies
         run: |
-          pip install --upgrade pip wheel && pip install -r requirements.txt
-          wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl && \
-            chmod +x ./allurectl
+          python -m pip install --upgrade pip && pip install allure-pytest pytest
+          wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+          chmod +x allurectl
         shell: bash
         working-directory: ${{ github.action_path }}
       - uses: actions/github-script@v4
