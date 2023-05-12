@@ -14,6 +14,7 @@ REPO = "allure2"
 
 
 @tm4j("AE-T1")
+@jira_issues("47")
 @allure.title("Create issue via api")
 @allure.story("Create new issue")
 @microservice("Billing")
@@ -28,7 +29,7 @@ def test_should_create_user_note(owner, repo, title):
 
 
 @tm4j("AE-T2")
-@jira_issues("AE-1")
+@jira_issues("48")
 @allure.title("Close issue via api")
 @allure.story("Close existing issue")
 @microservice("Repository")
