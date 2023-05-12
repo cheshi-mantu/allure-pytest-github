@@ -23,7 +23,7 @@ REPO = "allure2"
 @pytest.mark.parametrize("owner", [OWNER])
 @pytest.mark.parametrize("repo", [REPO])
 @pytest.mark.parametrize("title", ["First Note", "Second Note"])
-def test_should_create_user_note(owner, repo, title):
+def test_api_should_create_issue(owner, repo, title):
     steps.create_issue_with_title(owner, repo, title)
     steps.should_see_issue_with_title(owner, repo, title)
 
@@ -38,7 +38,7 @@ def test_should_create_user_note(owner, repo, title):
 @pytest.mark.parametrize("owner", [OWNER])
 @pytest.mark.parametrize("repo", [REPO])
 @pytest.mark.parametrize("title", ["First Note", "Second Note"])
-def test_should_delete_user_note(owner, repo, title):
+def test_api_should_delete_issue(owner, repo, title):
     steps.create_issue_with_title(owner, repo, title)
     steps.close_issue_with_title(owner, repo, title)
 

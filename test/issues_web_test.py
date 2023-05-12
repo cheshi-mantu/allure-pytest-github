@@ -55,7 +55,7 @@ def test_should_add_note_to_ads(web_driver):
 @pytest.mark.web
 @pytest.mark.regress
 @allure.title("Closing new issue for authorized user")
-def test_should_create_issue(web_driver):
+def test_should_close_issue(web_driver):
     steps.open_issues_page(OWNER, REPO)
     steps.create_issue_with_title(ISSUE_TITLE)
     steps.close_issue_with_title(ISSUE_TITLE)
