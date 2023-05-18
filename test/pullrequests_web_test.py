@@ -2,7 +2,7 @@ import allure
 import pytest
 from .steps import web_steps as steps
 from .marks import microservice, layer, owner, tm4j, jira_issues
-
+from .steps.web_steps import close_pull_request_for_branch
 
 pytestmark = [
     layer("web"),
@@ -28,7 +28,7 @@ def web_driver():
 @pytest.mark.web
 @pytest.mark.regress
 @pytest.mark.smoke
-@jira_issues("52", "53")
+@jira_issues("6")
 @allure.title("Creating new issue for authorized user")
 def test_should_create_pull_request(web_driver):
     steps.open_pull_requests_page(OWNER, REPO)
@@ -41,7 +41,7 @@ def test_should_create_pull_request(web_driver):
 @allure.story("Close existing pull request")
 @pytest.mark.web
 @pytest.mark.regress
-@jira_issues("54")
+@jira_issues("5")
 @allure.title("Deleting existing issue for authorized user")
 def test_should_close_pull_request(web_driver):
     steps.open_pull_requests_page(OWNER, REPO)

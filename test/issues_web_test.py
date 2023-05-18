@@ -25,7 +25,7 @@ def web_driver():
 @tm4j("AE-T3")
 @microservice("Billing")
 @allure.story("Create new issue")
-@jira_issues("49")
+@jira_issues("3")
 @pytest.mark.web
 @pytest.mark.critical
 @allure.title("Creating new issue authorized user")
@@ -35,10 +35,24 @@ def test_should_create_issue(web_driver):
     steps.should_see_issue_with_title(ISSUE_TITLE)
 
 
+@tm4j("AE-T5")
+@microservice("Repository")
+@allure.story("Close existing issue")
+@jira_issues("4")
+@pytest.mark.web
+@pytest.mark.regress
+@allure.title("Closing new issue for authorized user")
+def test_should_close_issue(web_driver):
+    steps.open_issues_page(OWNER, REPO)
+    steps.create_issue_with_title(ISSUE_TITLE)
+    steps.close_issue_with_title(ISSUE_TITLE)
+    steps.should_see_issue_with_title(ISSUE_TITLE)
+
+
 @tm4j("AE-T4")
 @microservice("Repository")
 @allure.story("Create new issue")
-@jira_issues("50")
+@jira_issues("7")
 @pytest.mark.web
 @pytest.mark.regress
 @allure.title("Adding note to advertisement")
@@ -48,15 +62,3 @@ def test_should_add_note_to_ads(web_driver):
     steps.should_see_issue_with_title(ISSUE_TITLE)
 
 
-@tm4j("AE-T5")
-@microservice("Repository")
-@allure.story("Close existing issue")
-@jira_issues("51")
-@pytest.mark.web
-@pytest.mark.regress
-@allure.title("Closing new issue for authorized user")
-def test_should_close_issue(web_driver):
-    steps.open_issues_page(OWNER, REPO)
-    steps.create_issue_with_title(ISSUE_TITLE)
-    steps.close_issue_with_title(ISSUE_TITLE)
-    steps.should_see_issue_with_title(ISSUE_TITLE)
