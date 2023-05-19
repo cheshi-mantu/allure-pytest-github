@@ -3,3 +3,5 @@
 - pytest
 - allure-pytest
 - github actions
+
+also used in Azure Pipelines
