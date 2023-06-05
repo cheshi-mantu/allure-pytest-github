@@ -1,0 +1,53 @@
+name: allure-testops-hetz
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      TEST_ENDPOINT:
+        description: "Endpoint for tests"
+        required: true
+        default: https://qaq.oka.qu.qu.qu
+      TEST_BROWSER:
+        description: "Browser used for tests"
+        required: true
+        default: chrome
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+      ALLURE_USERNAME:
+        description: "ALLURE_USERNAME service parameter. Leave blank"
+        required: false
+
+# env:
+#   ALLURE_TESTPLAN_PATH: "./testplan.json"
+#   ALLURE_RESULTS: "allure-results"
+#   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v2
+      - name: install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT_HETZNER }}
+          allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
+          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
+      - name: Prepare TestPlan
+        run: allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+      - name: Build with Gradle
+        run: | 
+          ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+          export $( allurectl job-run env)
+          printenv | grep TEST_
+          printenv | grep ALLURE_
+        env:
+          TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+          TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
+          ALLURE_TESTPLAN_PATH: "./testplan.json"
+          ALLURE_RESULTS: "allure-results"
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
