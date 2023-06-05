@@ -1,7 +1,7 @@
 name: allure-testops-hetz
 
 on:
-  push:
+  # push:
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT:
