@@ -19,10 +19,10 @@ on:
         description: "ALLURE_USERNAME service parameter. Leave blank"
         required: false
 
-# env:
-#   ALLURE_TESTPLAN_PATH: "./testplan.json"
-#   ALLURE_RESULTS: "allure-results"
-#   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+env:
+  ALLURE_TESTPLAN_PATH: "./testplan.json"
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
 
 jobs:
   all-tests:
@@ -48,6 +48,3 @@ jobs:
         env:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
-          ALLURE_TESTPLAN_PATH: "./testplan.json"
-          ALLURE_RESULTS: "allure-results"
-          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
