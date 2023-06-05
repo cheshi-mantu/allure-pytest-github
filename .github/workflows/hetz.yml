@@ -37,11 +37,11 @@ jobs:
           allure-endpoint: ${{ secrets.ALLURE_ENDPOINT_HETZNER }}
           allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
           allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
-      - name: Prepare TestPlan
-        run: allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-      - name: Build with Gradle
+      - name: Run pytest tests
         run: | 
-          allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+          # allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}  
+          # allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+          pytest --alluredir=${ALLURE_RESULTS}
           # export $( allurectl job-run env)
           # printenv | grep TEST_
           # printenv | grep ALLURE_
