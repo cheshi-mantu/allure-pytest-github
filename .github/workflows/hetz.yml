@@ -42,9 +42,12 @@ jobs:
       - name: Build with Gradle
         run: | 
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
-          export $( allurectl job-run env)
-          printenv | grep TEST_
-          printenv | grep ALLURE_
+          # export $( allurectl job-run env)
+          # printenv | grep TEST_
+          # printenv | grep ALLURE_
         env:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
+          ALLURE_TESTPLAN_PATH: "./testplan.json"
+          ALLURE_RESULTS: "allure-results"
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}          
