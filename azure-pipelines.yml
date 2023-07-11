@@ -30,6 +30,8 @@ steps:
     ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
     printenv | grep "ALLURE_"
     printenv | grep "AZURE_"
+    echo "All variables"
+    printenv
 
   displayName: 'running pytest tests'
   env:
