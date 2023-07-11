@@ -29,6 +29,7 @@ steps:
     # if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
     ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
     printenv | grep "ALLURE_"
+    printenv | grep "TEST_"
     printenv | grep "AZURE_"
     echo "All variables"
     printenv
