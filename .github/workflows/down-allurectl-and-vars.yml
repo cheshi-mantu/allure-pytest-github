@@ -28,7 +28,7 @@ jobs:
               repo: context.repo.repo,
               run_id: context.runId,
             });
-            return `${owner}/${repo}/actions/workflows/${result.data.workflow_id}`
+            return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
       - name: Prepare env file for Docker container
         run: printenv | grep "ALLURE\|GITHUB" > env.list
       - name: Add allurectl to Docker container
