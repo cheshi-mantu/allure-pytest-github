@@ -39,8 +39,6 @@ jobs:
       - name: Add allurectl to Docker container
         run: docker build . -t openjdk:8-allurectl
       - name: Run autotests in docker allurectl
-#        env:
-#          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         run: |
           docker run --volume "$(pwd)":/github/workspace \
                      --workdir=/github/workspace \
