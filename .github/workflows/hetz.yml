@@ -45,8 +45,9 @@ jobs:
       - name: Run pytest tests
         run: | 
           allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-          printenv | grep "ALLURE\|GITHUB" > env.list
+#          printenv | grep "ALLURE\|GITHUB" > env.list
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS} || true
+          printenv | grep "ALLURE\|GITHUB" > env.list
           export $( allurectl job-run env)
           printenv | grep TEST_
           printenv | grep ALLURE_
