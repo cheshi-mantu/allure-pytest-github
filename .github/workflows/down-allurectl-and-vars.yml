@@ -30,16 +30,17 @@ jobs:
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
       - name: Prepare env file for Docker container
+        env:
+          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         run: printenv | grep "ALLURE\|GITHUB" > env.list
       - name: Add allurectl to Docker container
         run: docker build . -t openjdk:8-allurectl
       - name: Run autotests in docker allurectl
-        env:
-          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+#        env:
+#          ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         run: |
-          echo ${ALLURE_JOB_UID}
-#          docker run --volume "$(pwd)":/github/workspace \
-#                     --workdir=/github/workspace \
-#                     --env-file env.list \
-#                     openjdk:8-allurectl \
-#                     allurectl watch --results build/allure-results -- ./gradlew clean test
+          docker run --volume "$(pwd)":/github/workspace \
+                     --workdir=/github/workspace \
+                     --env-file env.list \
+                     openjdk:8-allurectl \
+                     allurectl watch --results build/allure-results -- ./gradlew clean test
