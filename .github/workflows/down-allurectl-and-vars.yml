@@ -10,8 +10,8 @@ on:
 
 env:
   ALLURE_ENDPOINT: https://demo.testops.cloud
-  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-  ALLURE_PROJECT_ID: 536
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
+  ALLURE_PROJECT_ID: 276
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   ALLURE_JOB_UID: ${{ context.repo.owner }}/${{ context.repo.repo }}/actions/workflows/${{ result.data.workflow_id }}
 
