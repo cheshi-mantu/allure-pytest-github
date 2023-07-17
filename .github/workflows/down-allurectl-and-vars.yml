@@ -1,0 +1,33 @@
+name: Java CI
+
+on:
+  push:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: "Inner parameter for Allure TestOps"
+        required: false
+
+env:
+  ALLURE_ENDPOINT: https://demo.testops.cloud
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
+  ALLURE_PROJECT_ID: 536
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_JOB_UID: ${{ context.repo.owner }}/${{ context.repo.repo }}/actions/workflows/${{ result.data.workflow_id }}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Prepare env file for Docker container
+        run: printenv | grep "ALLURE\|GITHUB" > env.list
+      - name: Add allurectl to Docker container
+        run: docker build . -t openjdk:8-allurectl
+      - name: Run autotests in docker allurectl
+        run: |
+          docker run --volume "$(pwd)":/github/workspace \
+                     --workdir=/github/workspace \
+                     --env-file env.list \
+                     openjdk:8-allurectl \
+                     allurectl watch --results build/allure-results -- ./gradlew clean test
