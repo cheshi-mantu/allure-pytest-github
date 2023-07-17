@@ -14,8 +14,6 @@ env:
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
 
 jobs:
-  steps:
-
   test:
     runs-on: ubuntu-latest
     steps:
