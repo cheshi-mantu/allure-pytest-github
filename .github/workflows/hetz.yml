@@ -44,11 +44,14 @@ jobs:
           allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
       - name: Run pytest tests
         run: | 
-          allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}  
+          allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
+          printenv | grep "ALLURE\|GITHUB" > env.list
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS} || true
           export $( allurectl job-run env)
           printenv | grep TEST_
           printenv | grep ALLURE_
+          echo "Now, printing what we have in env.list"
+          cat env.list
         env:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
