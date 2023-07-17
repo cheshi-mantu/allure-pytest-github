@@ -1,7 +1,6 @@
-name: allure-testops-hetz
+name: allurectl-jobrun-start
 
 on:
-  # push:
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT:
@@ -39,19 +38,13 @@ jobs:
       - name: install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-#          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT_HETZNER }}
           allure-endpoint: https://testing.allure.aws.qameta.in/
           allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
-#          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
           allure-project-id: 276
       - name: Run pytest tests
         run: | 
-          allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-          allurectl watch -- pytest --alluredir=${ALLURE_RESULTS} || true
+          allurectl job-run start
           printenv | grep "ALLURE\|GITHUB" > env.list
-          export $( allurectl job-run env)
-          printenv | grep TEST_
-          printenv | grep ALLURE_
           echo "Now, printing what we have in env.list"
           cat env.list
         env:
