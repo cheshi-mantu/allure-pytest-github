@@ -1,4 +1,4 @@
-name: Java CI
+name: run tests inside docker container
 
 on:
   push:
