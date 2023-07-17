@@ -6,6 +6,9 @@ on:
       ALLURE_JOB_RUN_ID:
         description: "Inner parameter for Allure TestOps"
         required: false
+      ALLURE_USERNAME:
+        description: "Inner parameter for Allure TestOps"
+        required: false
 
 env:
   ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
