@@ -26,6 +26,7 @@ jobs:
         run: docker build . -t openjdk:8-allurectl
       - name: Run autotests in docker allurectl
         run: |
+          echo ${ALLURE_JOB_UID}
           docker run --volume "$(pwd)":/github/workspace \
                      --workdir=/github/workspace \
                      --env-file env.list \
