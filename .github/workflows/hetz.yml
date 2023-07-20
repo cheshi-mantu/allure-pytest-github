@@ -40,7 +40,7 @@ jobs:
         uses: allure-framework/setup-allurectl@v1
         with:
 #          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT_HETZNER }}
-          allure-endpoint: https://testing.allure.aws.qameta.in/
+          allure-endpoint: http://5.75.180.36:10777
           allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
 #          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
           allure-project-id: 276
