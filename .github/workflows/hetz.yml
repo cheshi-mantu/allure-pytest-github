@@ -43,7 +43,7 @@ jobs:
           allure-endpoint: http://5.75.180.36:10777
           allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
 #          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
-          allure-project-id: 276
+          allure-project-id: 23
       - name: Run pytest tests
         run: | 
           allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
