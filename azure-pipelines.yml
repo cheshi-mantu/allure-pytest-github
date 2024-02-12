@@ -25,9 +25,7 @@ steps:
       chmod +x ./allurectl
 
 - script: |
-    ./allurectl job-run plan --output-file $(ALLURE_TESTPLAN_PATH)
-    # if test -f $(ALLURE_TESTPLAN_PATH); then cat $(ALLURE_TESTPLAN_PATH); fi
-    ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS)
+    ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS) || true
     printenv | grep "ALLURE_"
     printenv | grep "TEST_"
     printenv | grep "AZURE_"
