@@ -14,7 +14,7 @@ parameters:
 jobs:
   build:
     docker:
-      - image: circleci/ubuntu:latest
+      - image: ubuntu:latest
     working_directory: ~/repo
     environment:
       ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
