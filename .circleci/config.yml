@@ -4,10 +4,13 @@ parameters:
   ALLURE_JOB_RUN_ID:
     type: string
     default: ""
-  BROWSER:
+  TESTS_BROWSER:
     type: string
     default: "firefox"
-  TESTING_HOST:
+  ALLURE_USERNAME:
+    type: string
+    default: ""
+  TESTS_HOST:
     type: string
     default: "https://demo.testops.cloud"
 
@@ -21,8 +24,8 @@ jobs:
       ALLURE_PROJECT_ID: 1724
       ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
       ALLURE_RESULTS: "allure-results"
-      TESTING_HOST: << pipeline.parameters.TESTING_HOST >>
-      BROWSER: << pipeline.parameters.BROWSER >>
+      TESTS_HOST: << pipeline.parameters.TESTING_HOST >>
+      TESTS_BROWSER: << pipeline.parameters.BROWSER >>
       ALLURE_LAUNCH_TAGS: "regular, circle"
     steps:
       - checkout
