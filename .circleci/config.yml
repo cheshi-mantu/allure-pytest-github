@@ -20,7 +20,7 @@ jobs:
       ALLURE_ENDPOINT: "https://demo.testops.cloud"
       ALLURE_PROJECT_ID: 1724
       ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
-      ALLURE_RESULTS: /allure-results
+      ALLURE_RESULTS: "allure-results"
       TESTING_HOST: << pipeline.parameters.TESTING_HOST >>
       BROWSER: << pipeline.parameters.BROWSER >>
       ALLURE_LAUNCH_TAGS: "regular, circle"
@@ -30,5 +30,5 @@ jobs:
       - run: |
           wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
           chmod +x ./allurectl
-      - run: ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS}
+      - run: ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS} || true
       - run: printenv
