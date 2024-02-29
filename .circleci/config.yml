@@ -28,6 +28,7 @@ jobs:
       - checkout
       - run: printenv
       - run: |
+          /usr/local/bin/python -m pip install --upgrade pip
           pip install pytest, allure-pytest
       - run: |
           wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
