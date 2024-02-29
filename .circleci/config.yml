@@ -15,7 +15,7 @@ jobs:
   build:
     docker:
       - image: python:3.9.1
-    working_directory: ~/repo
+    working_directory: ${PWD}
     environment:
       ALLURE_ENDPOINT: "https://demo.testops.cloud"
       ALLURE_PROJECT_ID: 1724
