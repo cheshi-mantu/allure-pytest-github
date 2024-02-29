@@ -15,7 +15,7 @@ jobs:
   build:
     docker:
       - image: python:3.9.1
-    working_directory: ${PWD}
+    working_directory: ~/repo
     environment:
       ALLURE_ENDPOINT: "https://demo.testops.cloud"
       ALLURE_PROJECT_ID: 1724
@@ -27,6 +27,8 @@ jobs:
     steps:
       - checkout
       - run: printenv
+      - run: |
+          pip install pytest, allure-pytest
       - run: |
           wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
           chmod +x ./allurectl
