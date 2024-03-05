@@ -53,13 +53,16 @@ jobs:
               run_id: context.runId,
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
-      - name: check if it's initial run
+      - uses: actions/download-artifact@v2
+        with:
+          name: allure-launch-id
         continue-on-error: true
+      - name: Read ALLURE_LAUNCH_ID from file
         run: |
           if [ ${{ github.run_attempt }} -gt 1 ]; then
           echo "This is a rerun."
-          export $(./allurectl job-run env | grep 'ALLURE_LAUNCH_ID')
-          ./allurectl launch open ${ALLURE_LAUNCH_ID}
+          ALLURE_LAUNCH_ID=$(cat allure_launch_id.txt)
+          echo "ALLURE_LAUNCH_ID is $ALLURE_LAUNCH_ID"
           else
           echo "This is the first run."
           fi
@@ -67,8 +70,13 @@ jobs:
         continue-on-error: true
         run: |
           ./allurectl watch -- pytest test \
-            --alluredir="$ALLURE_RESULTS" \
+            --alluredir="$ALLURE_RESULTS"
+          echo $ALLURE_LAUNCH_ID > allure_launch_id.txt  
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
           ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: allure-launch-id
+          path: allure_launch_id.txt
