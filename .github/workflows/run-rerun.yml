@@ -67,7 +67,7 @@ jobs:
         continue-on-error: true
         run: |
           echo "${ALLURE_LAUNCH_ID}"
-          echo "${ALLURE_LAUNCH_ID}" > allure_launch_id.txt
+          printenv ALLURE_LAUNCH_ID > allure_launch_id.txt
       - uses: actions/upload-artifact@v2
         with:
           name: allure-launch-id
