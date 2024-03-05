@@ -10,6 +10,7 @@ on:
 env:
   ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
   ALLURE_LAUNCH_TAGS: "jobRunEnv,then,watch"
+  ALLURE_LAUNCH_NAME: "jobRunEnv,then,watch"
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
   ALLURE_PROJECT_ID: 206
   ALLURE_RESULTS: "allure-results"
