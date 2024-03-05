@@ -43,7 +43,6 @@ jobs:
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
 
       - name: Run pytest
-        # id: dump-ci-envs
         if: github.run_attempt == 1  
         continue-on-error: true
         run: |
@@ -58,7 +57,8 @@ jobs:
         if: github.run_attempt > 1  
         continue-on-error: true
         run: |
-          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
+          export $(./allurectl job-run env)
+          printenv ALLURE_LAUNCH_ID
           ./allurectl launch open ${ALLURE_LAUNCH_ID}
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
         shell: bash
