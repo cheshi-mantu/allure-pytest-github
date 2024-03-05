@@ -59,6 +59,7 @@ jobs:
           if [ ${{ github.run_attempt }} -gt 1 ]; then
           echo "This is a rerun."
           ./allurectl job-run env
+          ./allurectl launch open ${ALLURE_LAUNCH_ID}
           else
           echo "This is the first run."
           fi
