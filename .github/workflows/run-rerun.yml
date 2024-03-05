@@ -74,4 +74,4 @@ jobs:
           path: allure_launch_id.txt
         env:
           ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
-          ALLURE_LAUNCH_ID: ${ALLURE_LAUNCH_ID}
+          ALLURE_LAUNCH_ID: ${env.ALLURE_LAUNCH_ID}
