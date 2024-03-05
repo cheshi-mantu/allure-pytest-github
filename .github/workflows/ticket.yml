@@ -18,9 +18,6 @@ on:
       ALLURE_JOB_RUN_ID:
         description: "Inner parameter for Allure TestOps"
         required: false
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 env:
   ALLURE_ENDPOINT: ${{ secrets.ALLURE_ENDPOINT }}
