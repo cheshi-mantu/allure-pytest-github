@@ -55,9 +55,9 @@ jobs:
         if: github.run_attempt == 1  
         continue-on-error: true
         run: |
-          export ALLURE_CI_ENV=$(allurectl ci env --encode)
+          export ALLURE_CI_ENV=$(./allurectl ci env --encode)
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
-          export $(allurectl job-run env | grep ALLURE_LAUNCH_ID)
+          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
           echo "ALLURE LAUNCH ID ${ALLURE_LAUNCH_ID}"
         shell: bash
         working-directory: ${{ github.action_path }}
