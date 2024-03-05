@@ -1,4 +1,4 @@
-name: run-rerun
+name: run-rerun hetz
 
 on:
   workflow_dispatch:
@@ -8,9 +8,9 @@ on:
         required: false
 
 env:
-  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
-  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
-  ALLURE_PROJECT_ID: 276
+  ALLURE_ENDPOINT: http://5.75.180.36:10777
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_HETZNER }}
+  ALLURE_PROJECT_ID: 23
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
 
@@ -41,25 +41,9 @@ jobs:
               run_id: context.runId,
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
-
       - name: Run pytest
-        if: github.run_attempt == 1  
         continue-on-error: true
         run: |
-          echo "allure-ci-env=$(bin/allurectl ci env --encode)" >> $GITHUB_OUTPUT
-          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
-        shell: bash
-        working-directory: ${{ github.action_path }}
-        env:
-          ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
-
-      - name: Run pytest
-        if: github.run_attempt > 1  
-        continue-on-error: true
-        run: |
-          export $(./allurectl job-run env)
-          printenv ALLURE_LAUNCH_ID
-          ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
         shell: bash
         working-directory: ${{ github.action_path }}
