@@ -53,7 +53,14 @@ jobs:
               run_id: context.runId,
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
-
+      - name: check if it's initial run
+        continue-on-error: true
+        run: |
+          if [ ${{ github.run_attempt }} -gt 1 ]; then
+          echo "This is a rerun."
+          else
+          echo "This is the first run."
+          fi
       - name: Run pytest
         continue-on-error: true
         run: |
