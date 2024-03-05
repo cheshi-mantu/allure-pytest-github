@@ -47,11 +47,17 @@ jobs:
         with:
           name: allure-launch-id
         continue-on-error: true
-      - name: Restore from artefact
+
+      - uses: actions/download-artifact@v2
+        if: github.run_attempt > 1
+        with:
+          name: allure-launch-id
+      - name: Read ALLURE_LAUNCH_ID from file
         if: github.run_attempt > 1
         run: |
           ALLURE_LAUNCH_ID=$(cat allure_launch_id.txt)
           echo "ALLURE_LAUNCH_ID is $ALLURE_LAUNCH_ID"
+
       - name: Run pytest
         id: dump-ci-envs
         if: github.run_attempt == 1  
