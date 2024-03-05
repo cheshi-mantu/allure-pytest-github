@@ -63,6 +63,11 @@ jobs:
         working-directory: ${{ github.action_path }}
         env:
           ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
+      - name: save allure launch id to file
+        if: github.run_attempt == 1
+        run: |
+          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
+          printenv ALLURE_LAUNCH_ID > allure_launch_id.txt
       - uses: actions/upload-artifact@v2
         with:
           name: allure-launch-id
