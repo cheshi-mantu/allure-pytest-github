@@ -1,7 +1,6 @@
 name: allure-testops-hetz
 
 on:
-  # push:
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT:
@@ -18,9 +17,7 @@ on:
       ALLURE_USERNAME:
         description: "ALLURE_USERNAME service parameter. Leave blank"
         required: false
-
 env:
-  ALLURE_TESTPLAN_PATH: "./testplan.json"
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
 
@@ -39,14 +36,11 @@ jobs:
       - name: install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-#          allure-endpoint: ${{ secrets.ALLURE_ENDPOINT_HETZNER }}
           allure-endpoint: http://5.75.180.36:10777
           allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
-#          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_HETZNER }}
           allure-project-id: 23
       - name: Run pytest tests
         run: | 
-          allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS} || true
           printenv | grep "ALLURE\|GITHUB" > env.list
           export $( allurectl job-run env)
@@ -57,6 +51,5 @@ jobs:
         env:
           TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
           TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
-          ALLURE_TESTPLAN_PATH: "./testplan.json"
           ALLURE_RESULTS: "allure-results"
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}          
