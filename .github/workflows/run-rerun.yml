@@ -17,8 +17,6 @@ env:
 jobs:
   all-tests:
     runs-on: ubuntu-latest
-    outputs: 
-      allure-ci-env: ${{ steps.dump-ci-envs.outputs.allure-ci-env }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
