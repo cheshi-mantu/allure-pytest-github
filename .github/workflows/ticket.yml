@@ -69,7 +69,15 @@ jobs:
       - name: Run pytest
         continue-on-error: true
         run: |
-          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+          if [ ${{ github.run_attempt }} -gt 1 ]; then
+          echo "This is a rerun."
+          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+          else
+          echo "This is the first run."
+          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
+          echo $ALLURE_LAUNCH_ID > allure_launch_id.txt
+          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+          fi
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
@@ -77,7 +85,6 @@ jobs:
       - name: Save launch id
         continue-on-error: true
         run: |
-          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
           echo $ALLURE_LAUNCH_ID > allure_launch_id.txt
       - uses: actions/upload-artifact@v2
         with:
