@@ -9,7 +9,7 @@ on:
 
 env:
   ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
-  ALLURE_LAUNCH_TAGS: "watch, only"
+  ALLURE_LAUNCH_TAGS: "job-run-env, then, watch"
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
   ALLURE_PROJECT_ID: 206
   ALLURE_RESULTS: "allure-results"
@@ -45,10 +45,11 @@ jobs:
       - name: Run pytest
         continue-on-error: true
         run: |
-          # export $(./allurectl job-run env)
+          export $(./allurectl job-run env)
           # printenv | grep ALLURE_
           # ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
