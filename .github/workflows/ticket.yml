@@ -58,6 +58,7 @@ jobs:
         run: |
           if [ ${{ github.run_attempt }} -gt 1 ]; then
           echo "This is a rerun."
+          ./allurectl job-run env
           else
           echo "This is the first run."
           fi
