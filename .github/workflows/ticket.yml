@@ -75,8 +75,9 @@ jobs:
           else
           echo "This is the first run."
           export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
-          echo $ALLURE_LAUNCH_ID > allure_launch_id.txt
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+          ./allurectl ci env
+          echo $ALLURE_LAUNCH_ID > allure_launch_id.txt
           fi
         shell: bash
         working-directory: ${{ github.action_path }}
