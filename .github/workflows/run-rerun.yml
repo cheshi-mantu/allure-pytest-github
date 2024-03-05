@@ -42,18 +42,6 @@ jobs:
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
 
-      - name: get that bloody artefact
-        if: github.run_attempt > 1  
-        uses: actions/download-artifact@v2
-        with:
-          name: allure-launch-id
-
-      - name: Read ALLURE_LAUNCH_ID from file
-        if: github.run_attempt > 1
-        run: |
-          ALLURE_LAUNCH_ID=$(cat allure_launch_id.txt)
-          echo "ALLURE_LAUNCH_ID is $ALLURE_LAUNCH_ID"
-
       - name: Run pytest
         # id: dump-ci-envs
         if: github.run_attempt == 1  
