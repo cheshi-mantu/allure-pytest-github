@@ -18,7 +18,7 @@ jobs:
   all-tests:
     runs-on: ubuntu-latest
     outputs: 
-      allure-launch-id: ${{ steps.setup-allure-env.outputs.allure-ci-env }}
+      allure-ci-env: ${{ steps.dump-ci-envs.outputs.allure-ci-env }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -53,18 +53,23 @@ jobs:
           ALLURE_LAUNCH_ID=$(cat allure_launch_id.txt)
           echo "ALLURE_LAUNCH_ID is $ALLURE_LAUNCH_ID"
       - name: Run pytest
+        id: dump-ci-envs
         if: github.run_attempt == 1  
         continue-on-error: true
         run: |
+          echo "allure-ci-env=$(bin/allurectl ci env --encode)" >> $GITHUB_OUTPUT
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
-          export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
-          printenv ALLURE_LAUNCH_ID > allure_launch_id.txt
+          # export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
+          # printenv ALLURE_LAUNCH_ID > allure_launch_id.txt
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
           ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
       - name: save allure launch id to file
         if: github.run_attempt == 1
+        env:
+          ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
+          ALLURE_CI_ENV: ${{ steps.dump-ci-envs.outputs.allure-ci-env }}
         run: |
           export $(./allurectl job-run env | grep ALLURE_LAUNCH_ID)
           printenv ALLURE_LAUNCH_ID > allure_launch_id.txt
