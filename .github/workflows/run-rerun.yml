@@ -44,7 +44,10 @@ jobs:
       - name: Run pytest
         continue-on-error: true
         run: |
-          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+          export $(./allurectl job-run env)
+          printenv | grep ALLURE_
+          ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
+          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
