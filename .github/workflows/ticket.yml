@@ -77,7 +77,7 @@ jobs:
         env:
           ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
       - name: Save launch id
-      continue-on-error: true
+        continue-on-error: true
           run: |
             echo $ALLURE_LAUNCH_ID > allure_launch_id.txt        
       - uses: actions/upload-artifact@v2
