@@ -7,13 +7,15 @@ on:
         description: "Endpoint for tests."
         required: true
         type: string
-        default: "https://qaq.oka.qu.qu.qu"
+        default: "https://testing.allure.aws.qameta.in"
       BROWSER:
         description: "Browser to use."
         required: false
         type: choice
         options:
           - chromium
+          - chrome
+          - opera
         default: chromium
       ALLURE_JOB_RUN_ID:
         description: "Inner parameter for Allure TestOps"
