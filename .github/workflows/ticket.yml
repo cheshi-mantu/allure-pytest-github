@@ -79,6 +79,7 @@ jobs:
       - name: Save launch id
         continue-on-error: true
         run: |
+          $(export ./allurectl job-run env | grep ALLURE_LAUNCH_ID)
           echo $ALLURE_LAUNCH_ID > allure_launch_id.txt        
       - uses: actions/upload-artifact@v2
         with:
