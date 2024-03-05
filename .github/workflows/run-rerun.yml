@@ -1,4 +1,4 @@
-name: run-rerun hetz
+name: run-rerun testing
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
 env:
   ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
-  ALLURE_PROJECT_ID: 276
+  ALLURE_PROJECT_ID: 206
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
 
@@ -44,9 +44,9 @@ jobs:
       - name: Run pytest
         continue-on-error: true
         run: |
-          export $(./allurectl job-run env)
-          printenv | grep ALLURE_
-          ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
+          # export $(./allurectl job-run env)
+          # printenv | grep ALLURE_
+          # ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
         shell: bash
         working-directory: ${{ github.action_path }}
