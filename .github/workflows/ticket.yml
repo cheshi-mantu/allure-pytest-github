@@ -1,4 +1,4 @@
-name: Run pytest tests
+name: ticket.yaml
 
 on:
   workflow_dispatch:
