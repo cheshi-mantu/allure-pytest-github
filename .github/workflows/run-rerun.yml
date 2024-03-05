@@ -59,7 +59,7 @@ jobs:
         run: |
           export $(./allurectl job-run env)
           printenv ALLURE_LAUNCH_ID
-          ./allurectl launch open ${ALLURE_LAUNCH_ID}
+          ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
         shell: bash
         working-directory: ${{ github.action_path }}
