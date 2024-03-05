@@ -43,15 +43,13 @@ jobs:
               run_id: context.runId,
             });
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
-      - uses: actions/download-artifact@v2
-        with:
-          name: allure-launch-id
-        continue-on-error: true
 
-      - uses: actions/download-artifact@v2
-        if: github.run_attempt > 1
+      - name: get that bloody artefact
+        if: github.run_attempt > 1  
+        uses: actions/download-artifact@v2
         with:
           name: allure-launch-id
+
       - name: Read ALLURE_LAUNCH_ID from file
         if: github.run_attempt > 1
         run: |
