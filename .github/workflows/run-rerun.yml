@@ -56,6 +56,7 @@ jobs:
         run: |
           export ALLURE_CI_ENV=$(allurectl ci env --encode)
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+          export $(allurectl job-run env | grep ALLURE_LAUNCH_ID)
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
