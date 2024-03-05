@@ -45,7 +45,7 @@ jobs:
         with:
           name: allure-launch-id
         continue-on-error: true
-      - name: Read ALLURE_LAUNCH_ID from file
+      - name: Restore from artefact
         if: github.run_attempt > 1
         run: |
           ALLURE_LAUNCH_ID=$(cat allure_launch_id.txt)
@@ -71,3 +71,4 @@ jobs:
           path: allure_launch_id.txt
         env:
           ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}
+          ALLURE_LAUNCH_ID: ${ALLURE_LAUNCH_ID}
