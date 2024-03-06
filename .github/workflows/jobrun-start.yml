@@ -1,4 +1,4 @@
-name: allurectl-jobrun-start
+name: allurectl-jobrun-start-stop
 
 on:
   workflow_dispatch:
