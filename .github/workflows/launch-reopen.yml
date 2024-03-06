@@ -43,13 +43,18 @@ jobs:
             return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
 
       - name: Run pytest
-        # if: github.run_attempt == 1  
         continue-on-error: true
         run: |
-          export $(./allurectl job-run env)
-          printenv | grep ALLURE_
-          ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
+          if [ ${{ github.run_attempt }} -eq 1 ]; then
+          echo "This command runs only on the first attempt."
           ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+          else
+            export $(./allurectl job-run env)
+            printenv | grep ALLURE_
+            ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
+            ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+          fi
+          printenv | grep ALLURE_
         shell: bash
         working-directory: ${{ github.action_path }}
         env:
