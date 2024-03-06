@@ -38,6 +38,7 @@ jobs:
           printenv | grep "ALLURE\|GITHUB" > env.list
           echo "Now, printing what we have in env.list"
           cat env.list
+          allurectl job-run stop
         env:
           ALLURE_RESULTS: "allure-results"
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}          
