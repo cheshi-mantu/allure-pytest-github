@@ -19,6 +19,16 @@ pipeline:
                   spec:
                     shell: Sh
                     command: echo "Welcome to Harness CI"
+              - step:
+                  type: Run
+                  name: get allurectl
+                  identifier: get_allurectl
+                  spec:
+                    shell: Sh
+                    command: |-
+                      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+                      chmod +x .allurectl
+                      ./allurectl --version
           platform:
             os: Linux
             arch: Amd64
