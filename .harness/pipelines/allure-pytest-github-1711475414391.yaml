@@ -19,18 +19,39 @@ pipeline:
                   spec:
                     shell: Sh
                     command: echo "Welcome to Harness CI"
+              - parallel:
+                  - step:
+                      type: Run
+                      name: get allurectl
+                      identifier: get_allurectl
+                      spec:
+                        connectorRef: account.harnessImage
+                        image: ubuntu:latest
+                        shell: Bash
+                        command: |-
+                          wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+                          chmod +x allurectl
+                          ./allurectl --version
+                          ./allurectl job-run env
+                          printenv
+                  - step:
+                      type: Run
+                      name: install pytest and required stuff
+                      identifier: install_pytest_and_required_stuff
+                      spec:
+                        shell: Bash
+                        command: |-
+                          python -m pip install --upgrade pip
+                          pip install allure-pytest pytest
+                      description: install pytest and required stuff
               - step:
                   type: Run
-                  name: get allurectl
-                  identifier: get_allurectl
+                  name: exec pytest tests via allurectl
+                  identifier: exec_pytest_tests_via_allurectl
                   spec:
-                    shell: Sh
-                    command: |-
-                      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
-                      chmod +x allurectl
-                      ./allurectl --version
-                      export $(./allurectl job-run env)
-                      printenv
+                    shell: Bash
+                    command: ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+                  description: exec pytest tests via allurectl
           platform:
             os: Linux
             arch: Amd64
