@@ -24,8 +24,6 @@ pipeline:
                   name: get allurectl
                   identifier: get_allurectl
                   spec:
-                    connectorRef: account.harnessImage
-                    image: ubuntu:latest
                     shell: Bash
                     command: |-
                       wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
