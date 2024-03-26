@@ -51,6 +51,7 @@ pipeline:
                       export ALLURE_PROJECT_ID=<+variable.ALLURE_PROJECT_ID>
                       export ALLURE_TOKEN=<+variable.ALLURE_TOKEN>
                       export ALLURE_LAUNCH_NAME=<+variable.ALLURE_LAUNCH_NAME>
+                      export ALLURE_RESULTS=<+variable.ALLURE_RESULTS>
                       printenv
                       ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
                   description: exec pytest tests via allurectl
