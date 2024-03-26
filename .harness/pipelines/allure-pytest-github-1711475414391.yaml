@@ -29,6 +29,8 @@ pipeline:
                       wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
                       chmod +x allurectl
                       ./allurectl --version
+                      export $(./allurectl job-run env)
+                      printenv
           platform:
             os: Linux
             arch: Amd64
