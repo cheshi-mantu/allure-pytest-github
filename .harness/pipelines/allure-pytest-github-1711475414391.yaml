@@ -29,7 +29,6 @@ pipeline:
                       wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
                       chmod +x allurectl
                       ./allurectl --version
-                      ./allurectl job-run env
                       printenv
               - step:
                   type: Run
@@ -47,7 +46,9 @@ pipeline:
                   identifier: exec_pytest_tests_via_allurectl
                   spec:
                     shell: Bash
-                    command: ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+                    command: |-
+                      printenv
+                      ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
                   description: exec pytest tests via allurectl
           platform:
             os: Linux
