@@ -48,7 +48,7 @@ jobs:
           return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
     - name: Download allurectl
       run: |
-        wget https://github.com/allure-framework/allurectl/releases/download/2.15.1/allurectl_linux_amd64 -O ./allurectl
+        wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
         chmod +x ./allurectl
     - name: Install dependencies
       run: |
@@ -60,7 +60,6 @@ jobs:
         TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
         TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
       run: |
-        printenv
-        ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+        ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS}
         export (./allurectl job-run env)
         printenv | grep ALLURE_
