@@ -4,7 +4,6 @@
 name: pytest tests with allure framework
 
 on:
-#  push:
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT:
@@ -18,9 +17,6 @@ on:
       ALLURE_JOB_RUN_ID:
         description: "Inner parameter for Allure TestOps"
         required: false
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 env:
   ALLURE_ENDPOINT: ${{ secrets.ALLURE_ENDPOINT }}
@@ -58,10 +54,6 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install allure-pytest pytest
-    - name: Prepare test plan
-      run: |
-        ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-        if [ -r ${ALLURE_TESTPLAN_PATH} ]; then cat ${ALLURE_TESTPLAN_PATH}; fi
     - name: Test with pytest and gen allure results
       env:
         ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
@@ -70,3 +62,5 @@ jobs:
       run: |
         printenv
         ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+        export (./allurectl job-run env)
+        printenv | grep ALLURE_
