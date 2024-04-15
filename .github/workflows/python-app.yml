@@ -15,7 +15,7 @@ on:
         required: true
         default: firefox
       ALLURE_JOB_RUN_ID:
-        description: "Inner parameter for Allure TestOps"
+        description: "Allure TestOps service parameter required to trigger from ATO side"
         required: false
 
 env:
