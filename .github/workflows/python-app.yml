@@ -60,5 +60,5 @@ jobs:
         TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
       run: |
         ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS} || true
-        export (./allurectl job-run env)
+        export $(./allurectl job-run env)
         printenv | grep ALLURE_
