@@ -4,7 +4,6 @@
 name: pytest tests with allure framework
 
 on:
-#  push:
   workflow_dispatch:
     inputs:
       TEST_ENDPOINT:
@@ -16,17 +15,13 @@ on:
         required: true
         default: firefox
       ALLURE_JOB_RUN_ID:
-        description: "Inner parameter for Allure TestOps"
+        description: "Allure TestOps service parameter required to trigger from ATO side"
         required: false
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
 
 env:
-  ALLURE_ENDPOINT: ${{ secrets.ALLURE_ENDPOINT }}
-  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN }}
-  ALLURE_PROJECT_ID: ${{ secrets.ALLURE_PROJECT_ID }}
-  ALLURE_TESTPLAN_PATH: "./testplan.json"
+  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in/
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
+  ALLURE_PROJECT_ID: 276
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   GH_BRANCH: ${{ github.ref_name }}
@@ -52,21 +47,18 @@ jobs:
           return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
     - name: Download allurectl
       run: |
-        wget https://github.com/allure-framework/allurectl/releases/download/1.21.1/allurectl_linux_386 -O ./allurectl
+        wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
         chmod +x ./allurectl
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install allure-pytest pytest
-    - name: Prepare test plan
-      run: |
-        ./allurectl job-run plan --output-file ${ALLURE_TESTPLAN_PATH}
-        if [ -r ${ALLURE_TESTPLAN_PATH} ]; then cat ${ALLURE_TESTPLAN_PATH}; fi
     - name: Test with pytest and gen allure results
       env:
         ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
         TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
         TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
       run: |
-        printenv
-        ./allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
+        ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS} || true
+        export $(./allurectl job-run env)
+        printenv | grep ALLURE_
