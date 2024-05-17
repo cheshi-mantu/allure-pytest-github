@@ -8,7 +8,7 @@ on:
         required: false
 
 env:
-  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
+  ALLURE_ENDPOINT: https://testing.testops.cloud
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
   ALLURE_PROJECT_ID: 276
   ALLURE_RESULTS: "allure-results"

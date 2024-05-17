@@ -11,7 +11,7 @@ env:
   ALLURE_RESULTS: "allure-results"
   ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
   ALLURE_LAUNCH_NAME: "allurectl jobrun start then stop, no test results"
-  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
+  ALLURE_ENDPOINT: https://testing.testops.cloud
   ALLURE_PROJECT_ID: 276
 
 
@@ -30,7 +30,7 @@ jobs:
       - name: install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-          allure-endpoint: https://testing.allure.aws.qameta.in
+          allure-endpoint: https://testing.testops.cloud
           allure-token: ${{ secrets.ALLURE_TOKEN_TESTING }}
           allure-project-id: 276
       - name: Run pytest tests

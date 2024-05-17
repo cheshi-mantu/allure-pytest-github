@@ -7,7 +7,7 @@ on:
         description: "Endpoint for tests."
         required: true
         type: string
-        default: "https://testing.allure.aws.qameta.in"
+        default: "https://testing.testops.cloud"
       BROWSER:
         description: "Browser to use."
         required: false
@@ -22,7 +22,7 @@ on:
         required: false
 
 env:
-  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in
+  ALLURE_ENDPOINT: https://testing.testops.cloud
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
   ALLURE_PROJECT_ID: 276
   ALLURE_RESULTS: "allure-results"
