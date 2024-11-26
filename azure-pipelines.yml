@@ -45,7 +45,7 @@ steps:
 
   displayName: 'running pytest tests'
   env:
-    ALLURE_ENDPOINT: https://testing.testops.cloud
+    ALLURE_ENDPOINT: https://demo.testops.cloud
     ALLURE_PROJECT_ID: $(ALLURE_PROJECT_ID)
     ALLURE_TOKEN: $(ALLURE_TOKEN)
     ALLURE_RESULTS: $(ALLURE_RESULTS)
