@@ -60,5 +60,3 @@ def test_should_add_note_to_ads(web_driver):
     steps.open_issues_page(OWNER, REPO)
     steps.create_issue_with_title(ISSUE_TITLE)
     steps.should_see_issue_with_title(ISSUE_TITLE)
-
-

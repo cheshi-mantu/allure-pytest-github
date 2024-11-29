@@ -3,3 +3,4 @@
 testplan.json
 allure-results/
 __pycache__
+.DS_Store
