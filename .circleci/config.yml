@@ -1,18 +1,18 @@
 version: 2.1
 
 parameters:
+  CIRCLE_TESTS_BROWSER:
+    type: string
+    default: "vivaldi"
+  CIRCLE_TESTS_HOST:
+    type: string
+    default: "https://demo.testops.cloud"
   ALLURE_JOB_RUN_ID:
     type: string
     default: ""
-  TESTS_BROWSER:
-    type: string
-    default: "firefox"
   ALLURE_USERNAME:
     type: string
     default: ""
-  TESTS_HOST:
-    type: string
-    default: "https://demo.testops.cloud"
 
 jobs:
   build:
@@ -21,11 +21,11 @@ jobs:
     working_directory: ~/repo
     environment:
       ALLURE_ENDPOINT: "https://demo.testops.cloud"
-      ALLURE_PROJECT_ID: 338
+      ALLURE_PROJECT_ID: 1724
       ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
       ALLURE_RESULTS: "allure-results"
-      TESTS_HOST: << pipeline.parameters.TESTS_HOST >>
-      TESTS_BROWSER: << pipeline.parameters.TESTS_BROWSER >>
+      CIRCLE_TESTS_HOST: << pipeline.parameters.CIRCLE_TESTS_HOST >>
+      CIRCLE_TESTS_BROWSER: << pipeline.parameters.CIRCLE_TESTS_BROWSER >>
       ALLURE_LAUNCH_TAGS: "regular, circle"
     steps:
       - checkout
