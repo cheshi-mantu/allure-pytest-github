@@ -1,18 +1,18 @@
 version: 2.1
 
 parameters:
+  CIRCLE_TESTS_BROWSER:
+    type: string
+    default: "vivaldi"
+  CIRCLE_TESTS_HOST:
+    type: string
+    default: "https://demo.testops.cloud"
   ALLURE_JOB_RUN_ID:
     type: string
     default: ""
-  TESTS_BROWSER:
-    type: string
-    default: "firefox"
   ALLURE_USERNAME:
     type: string
     default: ""
-  TESTS_HOST:
-    type: string
-    default: "https://demo.testops.cloud"
 
 jobs:
   build:
