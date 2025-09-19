@@ -21,12 +21,12 @@ jobs:
     working_directory: ~/repo
     environment:
       ALLURE_ENDPOINT: "https://demo.testops.cloud"
-      ALLURE_PROJECT_ID: 1724
+      ALLURE_PROJECT_ID: 338
       ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
       ALLURE_RESULTS: "allure-results"
       CIRCLE_TESTS_HOST: << pipeline.parameters.CIRCLE_TESTS_HOST >>
       CIRCLE_TESTS_BROWSER: << pipeline.parameters.CIRCLE_TESTS_BROWSER >>
-      ALLURE_LAUNCH_TAGS: "regular, circle"
+      ALLURE_LAUNCH_TAGS: "circle, demo"
     steps:
       - checkout
       - run: printenv
