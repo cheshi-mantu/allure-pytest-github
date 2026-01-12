@@ -12,8 +12,8 @@ on:
 
 env:
   ALLURE_ENDPOINT: https://testing.testops.cloud
-  ALLURE_LAUNCH_TAGS: "jobRunEnv,then,watch"
-  ALLURE_LAUNCH_NAME: "jobRunEnv,then,watch"
+  ALLURE_LAUNCH_TAGS: "watch"
+  ALLURE_LAUNCH_NAME: "no allurectl action added, watch"
   ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
   ALLURE_PROJECT_ID: 206
   ALLURE_RESULTS: "allure-results"
@@ -50,10 +50,7 @@ jobs:
       - name: Run pytest
         continue-on-error: true
         run: |
-          export $(./allurectl job-run env)
-          # printenv | grep ALLURE_
-          # ./allurectl launch reopen ${ALLURE_LAUNCH_ID}
-          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
 
         shell: bash
         working-directory: ${{ github.action_path }}
