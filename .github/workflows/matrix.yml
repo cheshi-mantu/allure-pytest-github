@@ -39,6 +39,7 @@ jobs:
           allure-project-id: 14369
       - name: Run pytest tests
         run: |
+          echo "$(printenv | grep ALLURE_)"
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
         env:
           ALLURE_TESTPLAN_PATH: "./testplan.json"
