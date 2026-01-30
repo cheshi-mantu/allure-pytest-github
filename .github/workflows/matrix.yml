@@ -39,7 +39,7 @@ jobs:
           allure-project-id: 14369
       - name: Run pytest tests
         run: |
-          echo "$(printenv | grep ALLURE_)"
+          echo "$(printenv)"
           export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           echo "JOB_RUN_UID=${JOB_RUN_UID}"
           allurectl watch --job-run-uid=${JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
