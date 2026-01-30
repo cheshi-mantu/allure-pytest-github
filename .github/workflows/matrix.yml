@@ -41,7 +41,7 @@ jobs:
         run: |
           echo "$(printenv)"
           echo "Run ID: ${{ github.run_id }}"
-          export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          export JOB_RUN_UID="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}/${{ matrix.MODEL_NAME }}"
           echo "JOB_RUN_UID=${JOB_RUN_UID}"
           allurectl watch --job-run-uid=${JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
         env:
