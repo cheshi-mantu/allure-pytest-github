@@ -40,7 +40,7 @@ jobs:
       - name: Run pytest tests
         run: |
           echo "$(printenv | grep ALLURE_)"
-          allurectl watch --allure-job-run-uid=${ALLURE_JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
+          allurectl watch --job-run-uid=${ALLURE_JOB_RUN_UID} -- pytest --alluredir=${ALLURE_RESULTS}
         env:
           ALLURE_TESTPLAN_PATH: "./testplan.json"
           ALLURE_RESULTS: "allure-results"
