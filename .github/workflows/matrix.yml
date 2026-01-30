@@ -17,7 +17,6 @@ env:
 jobs:
   matrix-tests:
     runs-on: ubuntu-latest
-    needs: setup-allure
     strategy:
       fail-fast: false
       matrix:
