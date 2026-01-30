@@ -40,11 +40,13 @@ jobs:
       - name: Run pytest tests
         run: |
           echo "$(printenv | grep ALLURE_)"
+          
           allurectl watch -- pytest --alluredir=${ALLURE_RESULTS}
         env:
           ALLURE_TESTPLAN_PATH: "./testplan.json"
           ALLURE_RESULTS: "allure-results"
           ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+          ALLURE_JOB_RUN_UID: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
           MODEL_NAME: ${{ matrix.MODEL_NAME }}
           THREADS: ${{ matrix.THREADS }}
   
