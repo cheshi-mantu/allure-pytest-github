@@ -1,0 +1,58 @@
+name: without allurectl action
+
+on:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+      ALLURE_USERNAME:
+        description: "ALLURE_USERNAME service parameter. Leave blank"
+        required: false
+
+env:
+  ALLURE_ENDPOINT: https://testing.testops.cloud
+  ALLURE_LAUNCH_TAGS: "watch"
+  ALLURE_LAUNCH_NAME: "no allurectl action added, watch"
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
+  ALLURE_PROJECT_ID: 206
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip 
+          pip install allure-pytest pytest
+          # wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+          wget https://github.com/cheshi-mantu/allurectl-local-builds/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+          chmod +x allurectl
+        shell: bash
+        working-directory: ${{ github.action_path }}
+      - uses: actions/github-script@v4
+        id: allure-job-uid
+        with:
+          result-encoding: string
+          script: |
+            const result = await github.actions.getWorkflowRun({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: context.runId,
+            });
+            return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
+      - name: Run pytest
+        continue-on-error: true
+        run: |
+          ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS" || true
+
+        shell: bash
+        working-directory: ${{ github.action_path }}
+        env:
+          ALLURE_JOB_UID: ${{ steps.allure-job-uid.outputs.result }}

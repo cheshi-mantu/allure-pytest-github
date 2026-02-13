@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_cheshi_mantu_allure_pytest_github_1711475531568-pr-trigger-input-set
+  identifier: Build_cheshi_mantu_allure_pytest_github_1711475531568prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_cheshi_mantu_allure_pytest_github_1711475531568
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>

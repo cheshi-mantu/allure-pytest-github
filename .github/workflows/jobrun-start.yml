@@ -1,0 +1,45 @@
+name: allurectl-jobrun-start-stop
+
+on:
+  workflow_dispatch:
+    inputs:
+      ALLURE_JOB_RUN_ID:
+        description: "ALLURE_JOB_RUN_ID service parameter. Leave blank."
+        required: false
+
+env:
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  ALLURE_LAUNCH_NAME: "allurectl jobrun start then stop, no test results"
+  ALLURE_ENDPOINT: https://testing.testops.cloud
+  ALLURE_PROJECT_ID: 276
+
+
+jobs:
+  all-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install allure-pytest pytest
+      - name: install and configure allurectl
+        uses: allure-framework/setup-allurectl@v1
+        with:
+          allure-endpoint: https://testing.testops.cloud
+          allure-token: ${{ secrets.ALLURE_TOKEN_TESTING }}
+          allure-project-id: 276
+      - name: Run pytest tests
+        run: | 
+          allurectl job-run start
+          printenv | grep "ALLURE\|GITHUB" > env.list
+          echo "Now, printing what we have in env.list"
+          cat env.list
+          allurectl job-run stop
+        env:
+          ALLURE_RESULTS: "allure-results"
+          ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}          

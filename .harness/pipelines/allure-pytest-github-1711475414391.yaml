@@ -1,0 +1,70 @@
+pipeline:
+  name: allure-pytest-github
+  identifier: Build_cheshi_mantu_allure_pytest_github_1711475531568
+  projectIdentifier: default_project
+  orgIdentifier: default
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: Echo Welcome Message
+                  identifier: Echo_Welcome_Message
+                  spec:
+                    shell: Sh
+                    command: echo "Welcome to Harness CI"
+              - step:
+                  type: Run
+                  name: get allurectl
+                  identifier: get_allurectl
+                  spec:
+                    shell: Bash
+                    command: |-
+                      wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+                      chmod +x allurectl
+                      ./allurectl --version
+                      printenv
+              - step:
+                  type: Run
+                  name: install pytest and required stuff
+                  identifier: install_pytest_and_required_stuff
+                  spec:
+                    shell: Bash
+                    command: |-
+                      python -m pip install --upgrade pip
+                      pip install allure-pytest pytest
+                  description: install pytest and required stuff
+              - step:
+                  type: Run
+                  name: exec pytest tests via allurectl
+                  identifier: exec_pytest_tests_via_allurectl
+                  spec:
+                    shell: Bash
+                    command: |-
+                      export ALLURE_ENDPOINT=<+variable.ALLURE_ENDPOINT>
+                      export ALLURE_PROJECT_ID=<+variable.ALLURE_PROJECT_ID>
+                      export ALLURE_TOKEN=<+variable.ALLURE_TOKEN>
+                      export ALLURE_LAUNCH_NAME=<+variable.ALLURE_LAUNCH_NAME>
+                      export ALLURE_RESULTS=<+variable.ALLURE_RESULTS>
+                      printenv
+                      ./allurectl watch -- pytest test --alluredir="$ALLURE_RESULTS"
+                  description: exec pytest tests via allurectl
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+        description: ""
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.Github
+        repoName: cheshi-mantu/allure-pytest-github
+        build: <+input>

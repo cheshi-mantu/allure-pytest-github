@@ -1,0 +1,64 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: pytest tests with allure framework
+
+on:
+  workflow_dispatch:
+    inputs:
+      TEST_ENDPOINT:
+        description: "Endpoint for tests"
+        required: true
+        default: https://gimme.gimme.dat.github.com
+      TEST_BROWSER:
+        description: "Browser for tests"
+        required: true
+        default: firefox
+      ALLURE_JOB_RUN_ID:
+        description: "Allure TestOps service parameter required to trigger from ATO side"
+        required: false
+
+env:
+  ALLURE_ENDPOINT: https://testing.allure.aws.qameta.in/
+  ALLURE_TOKEN: ${{ secrets.ALLURE_TOKEN_TESTING }}
+  ALLURE_PROJECT_ID: 276
+  ALLURE_RESULTS: "allure-results"
+  ALLURE_JOB_RUN_ID: ${{ github.event.inputs.ALLURE_JOB_RUN_ID }}
+  GH_BRANCH: ${{ github.ref_name }}
+  ALLURE_LAUNCH_TAGS: "github, demo, pytest, $GH_BRANCH"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v2
+    - uses: actions/github-script@v4
+      id: allure-job-uid
+      with:
+        result-encoding: string
+        script: |
+          const result = await github.actions.getWorkflowRun({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            run_id: context.runId,
+          });
+          return `${context.repo.owner}/${context.repo.repo}/actions/workflows/${result.data.workflow_id}`
+    - name: Download allurectl
+      run: |
+        wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+        chmod +x ./allurectl
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install allure-pytest pytest
+    - name: Test with pytest and gen allure results
+      env:
+        ALLURE_JOB_UID: ${{steps.allure-job-uid.outputs.result}}
+        TEST_ENDPOINT: ${{ github.event.inputs.TEST_ENDPOINT }}
+        TEST_BROWSER: ${{ github.event.inputs.TEST_BROWSER }}
+      run: |
+        ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS} || true
+        export $(./allurectl job-run env)
+        printenv | grep ALLURE_

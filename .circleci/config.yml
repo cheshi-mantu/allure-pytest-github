@@ -1,0 +1,40 @@
+version: 2.1
+
+parameters:
+  CIRCLE_TESTS_BROWSER:
+    type: string
+    default: "vivaldi"
+  CIRCLE_TESTS_HOST:
+    type: string
+    default: "https://demo.testops.cloud"
+  ALLURE_JOB_RUN_ID:
+    type: string
+    default: ""
+  ALLURE_USERNAME:
+    type: string
+    default: ""
+
+jobs:
+  build:
+    docker:
+      - image: python:3.9.1
+    working_directory: ~/repo
+    environment:
+      ALLURE_ENDPOINT: "https://demo.testops.cloud"
+      ALLURE_PROJECT_ID: 338
+      ALLURE_JOB_RUN_ID: << pipeline.parameters.ALLURE_JOB_RUN_ID >>
+      ALLURE_RESULTS: "allure-results"
+      CIRCLE_TESTS_HOST: << pipeline.parameters.CIRCLE_TESTS_HOST >>
+      CIRCLE_TESTS_BROWSER: << pipeline.parameters.CIRCLE_TESTS_BROWSER >>
+      ALLURE_LAUNCH_TAGS: "circle, demo"
+    steps:
+      - checkout
+      - run: printenv
+      - run: |
+          /usr/local/bin/python -m pip install --upgrade pip
+          pip install allure-pytest pytest
+      - run: |
+          wget https://github.com/allure-framework/allurectl/releases/latest/download/allurectl_linux_amd64 -O ./allurectl
+          chmod +x ./allurectl
+      - run: ./allurectl watch -- pytest test --alluredir=${ALLURE_RESULTS} || true
+      - run: printenv
