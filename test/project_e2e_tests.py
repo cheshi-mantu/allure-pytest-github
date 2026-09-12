@@ -19,3 +19,6 @@ def test_should_project():
     with allure.step(""):
         print("then some actions")
         pass
+
+def test_import_test_case():
+    pass
