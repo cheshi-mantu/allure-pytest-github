@@ -27,7 +27,7 @@ def web_driver():
 @pytest.mark.web
 @pytest.mark.regress
 @pytest.mark.smoke
-@jira_issues("6")
+@jira_issues("AE-3")
 @allure.title("Creating new issue for authorized user")
 def test_should_create_pull_request(web_driver):
     steps.open_pull_requests_page(OWNER, REPO)
@@ -39,7 +39,7 @@ def test_should_create_pull_request(web_driver):
 @allure.story("Close existing pull request")
 @pytest.mark.web
 @pytest.mark.regress
-@jira_issues("5")
+@jira_issues("AE-4")
 @allure.title("Deleting existing issue for authorized user")
 def test_should_close_pull_request(web_driver):
     steps.open_pull_requests_page(OWNER, REPO)
