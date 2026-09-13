@@ -22,10 +22,9 @@ def web_driver():
     steps.stop_driver()
 
 
-@tm4j("AE-T3")
 @microservice("Billing")
 @allure.story("Create new issue")
-@jira_issues("3")
+@jira_issues("AE-1")
 @pytest.mark.web
 @pytest.mark.critical
 @allure.title("Creating new issue authorized user")
@@ -35,10 +34,9 @@ def test_should_create_issue(web_driver):
     steps.should_see_issue_with_title(ISSUE_TITLE)
 
 
-@tm4j("AE-T5")
 @microservice("Repository")
 @allure.story("Close existing issue")
-@jira_issues("4")
+@jira_issues("AE-2")
 @pytest.mark.web
 @pytest.mark.regress
 @allure.title("Closing new issue for authorized user")
@@ -49,10 +47,9 @@ def test_should_close_issue(web_driver):
     steps.should_see_issue_with_title(ISSUE_TITLE)
 
 
-@tm4j("AE-T4")
 @microservice("Repository")
-@allure.story("Create new issue")
-@jira_issues("7")
+@allure.story("Creating entities")
+@jira_issues("AE-6")
 @pytest.mark.web
 @pytest.mark.regress
 @allure.title("Adding note to advertisement")

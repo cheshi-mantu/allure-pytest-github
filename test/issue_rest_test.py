@@ -13,8 +13,7 @@ OWNER = "allure-framework"
 REPO = "allure2"
 
 
-@tm4j("AE-T1")
-@jira_issues("1")
+@jira_issues("AE-1")
 @allure.title("Create issue via api")
 @allure.story("Create new issue")
 @microservice("Billing")
@@ -28,8 +27,7 @@ def test_api_should_create_issue(owner, repo, title):
     steps.should_see_issue_with_title(owner, repo, title)
 
 
-@tm4j("AE-T2")
-@jira_issues("2")
+@jira_issues("AE-2")
 @allure.title("Close issue via api")
 @allure.story("Close existing issue")
 @microservice("Repository")

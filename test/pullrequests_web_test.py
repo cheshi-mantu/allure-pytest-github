@@ -22,7 +22,6 @@ def web_driver():
     steps.stop_driver()
 
 
-@tm4j("AE-T6")
 @microservice("Billing")
 @allure.story("Create new pull request")
 @pytest.mark.web
@@ -36,7 +35,6 @@ def test_should_create_pull_request(web_driver):
     steps.should_see_pull_request_for_branch(BRANCH)
 
 
-@tm4j("AE-T7")
 @microservice("Repository")
 @allure.story("Close existing pull request")
 @pytest.mark.web
