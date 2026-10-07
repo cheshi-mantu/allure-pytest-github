@@ -36,12 +36,12 @@ jobs:
       - name: install and configure allurectl
         uses: allure-framework/setup-allurectl@v1
         with:
-          allure-endpoint: http://5.75.180.36:10777
-          allure-token: ${{ secrets.ALLURE_TOKEN_HETZNER }}
-          allure-project-id: 23
+          allure-endpoint: ${secrets.ALLURE_ENDPOINT_QAMETAIN}
+          allure-token: ${{ secrets.ALLURE_TOKEN_QAMETAIN }}
+          allure-project-id: ${{ secrets.ALLURE_PROJECT_ID_QAMETAIN }}
       - name: Run pytest tests
         run: | 
-          allurectl watch -- pytest --alluredir=${ALLURE_RESULTS} || true
+          allurectl watch -- pytest tests || true
           printenv | grep "ALLURE\|GITHUB" > env.list
           export $( allurectl job-run env)
           printenv | grep TEST_

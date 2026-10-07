@@ -41,7 +41,7 @@ jobs:
           allure-endpoint: https://testing.testops.cloud/
           allure-token: ${{ secrets.ALLURE_TOKEN_TESTING }}
           allure-project-id: 276
-      - name: Run pytest tests
+      - name: there are no tests
         run: | 
           printenv | grep "ALLURE\|GITHUB" > env.list
           echo "Now, printing what we have in env.list"

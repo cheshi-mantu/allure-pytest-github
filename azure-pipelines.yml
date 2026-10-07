@@ -36,7 +36,7 @@ steps:
       chmod +x ./allurectl
 
 - script: |
-    ./allurectl watch -- pytest --alluredir=$(ALLURE_RESULTS) || true
+    ./allurectl watch -- pytest tests || true
     printenv | grep "ALLURE_"
     printenv | grep "TEST_"
     printenv | grep "AZURE_"
