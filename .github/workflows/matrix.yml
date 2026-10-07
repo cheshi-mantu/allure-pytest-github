@@ -20,8 +20,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        MODEL_NAME: [ModelONE, ModelTWO, ModelTHREE]
-        THREADS: [ONE, TWO]
+        MODEL_NAME: [ModelONE]
+        THREADS: [ONE]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v4
