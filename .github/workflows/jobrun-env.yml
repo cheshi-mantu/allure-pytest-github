@@ -35,7 +35,8 @@ jobs:
           allure-project-id: 276
       - name: Run pytest tests
         run: | 
-          allurectl job-run env
+          allurectl watch -- pytest tests || true
+          echo "$(allurectl job-run env)"
           # allurectl job-run stop
         env:
           ALLURE_RESULTS: "allure-results"
